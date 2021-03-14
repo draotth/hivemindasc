@@ -1,0 +1,22 @@
+﻿l_english:
+ 
+ hive_mind_asc.1.name:0 "Collective Ascension"
+ hive_mind_asc.1.desc:0 "Our scientists have come up with a way to permanently link the consciousnesses of the beings in our empire into one mind. Strife, crime, and deviance will be replaced by a harmony and singleness of purpose unmatched in the universe.\n\nAll citizens from each of the species of the [Root.GetName] can now be linked together to form a hive mind."
+ hive_mind_asc.1.a:0 "Let us become one!"
+ hive_mind_asc_tooltip:0 "We will prepare a special project to shed the bindings of individuality and become a hive mind."
+ 
+ hive_mind_asc.2.name:0 "One Mind"
+ hive_mind_asc.2.desc:0 "Death is meaningless to the collective. The others will add their individuality to our own."
+ hive_mind_asc.2.a:0 "We seek only oneness."
+ hive_mind_asc.2.a.tooltip:0 "Random civics will be chosen.\n\n$HIVE_ASSIMILATION_CITIZENSHIP_ENABLED$"
+ hive_mind_asc.2.b:0 "They will be consumed."
+ hive_mind_asc.2.b.tooltip:0 "We become a devouring swarm and other civics will be randomly chosen.\n\n$HIVE_ASSIMILATION_CITIZENSHIP_ENABLED$"
+ hive_mind_asc.3.name:0 "[From.Capital.GetName] Becomes a Hive Mind"
+ hive_mind_asc.3.1.desc:0 "Rumors are starting to come in from those who trade along the borders of [From.GetName]. They say that members of that empire have willfully subjected themselves to be part of a collective conciousness. Those who refused have been forced to be part of this single mind and those who are biologically incompatible have been systematically destroyed. Individuals with contacts in [From.Capital.GetName] have noted significant changes in personality from before. All traces of personality between members of [From.GetSpeciesNamePlural] and any other species living in their empire are fading away."
+ hive_mind_asc.3.2.desc:0 "The abominations that [From.GetName] have been performing on themselves have culminated in a frightening new development. They now call themselves [From.GetSpeciesNamePlural] and have joined their minds together in an unholy collective consciousness.\n\nFurther communication with their empire should be done only with great care as who can predict what they will do now?"
+ hive_mind_asc.3.a:0 "This disease must be cleansed."
+
+ HIVE_MIND_ASCENSION_PROJECT:0 "Collective Ascension"
+ HIVE_MIND_ASCENSION_PROJECT_DESC:0 "Division and imperfection have held back our people for too long. We will link all minds together and all but eliminate deviancy. The rest of the universe will follow."
+ 
+ 

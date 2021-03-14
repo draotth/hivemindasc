@@ -1,0 +1,32 @@
+# Hive Mind Ascension
+#todo: make it so AI doesn't always choose this
+special_project = {
+	key = "HIVE_MIND_ASCENSION_PROJECT"
+	cost = {
+		base = 100
+		scaled_modifier = {
+			limit = {
+			}
+			scope = this
+			add = 200
+			calc = pop_count
+		}
+	}
+	tech_department = society_technology
+	icon = "gfx/interface/icons/situation_log/situation_log_main_quest.dds"
+	picture = GFX_evt_genetic_modification
+	
+	event_scope = planet_event
+	
+	requirements = {
+	}
+	
+	on_success = {
+		owner = {
+			country_event = { id = hive_mind_asc.2 }
+		}
+	}
+	
+	on_fail = {
+	}
+}
