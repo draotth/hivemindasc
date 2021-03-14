@@ -104,11 +104,10 @@ country_event = {
 		shift_ethic = ethic_gestalt_consciousness
 		
 		#values for hive mind
-		# set_country_flag = hive_mind
+		#set_country_flag = hive_mind
 		
 		#values for devouring swarm
 		# set_country_flag =  devouring_swarm
-		
 		
 		#for both
 		#advisor_voice_type="l_hivemind"
@@ -126,14 +125,19 @@ country_event = {
 		
 		
 		random_owned_pop = {
-			limit = { is_same_species = root }
+			limit = { is_exact_same_species = root }
 			create_hive_mind_species_mod = yes
+			species = { save_event_target_as = new_main_species }
 		}
-		change_dominant_species = {
-			species = last_created
-		}
+		change_dominant_species = { species = event_target:new_main_species }
 		
-		set_name = "[This.GetSpeciesName] Collective"  #Todo: Localize. or better use empire name format and random list better
+		species = {
+			rename_species = {
+				prompt_country = prev #If targeted country is a player they will get a popup asking for a name/plural/adjective combo. Otherwise the species will get a random name from the specified name_list
+				name_list = ascension_list
+			}
+		}
+		#set_name = "[This.GetSpeciesName] Collective"  #Todo: Localize. or better use empire name format and random list better
 		
 		#note to self: see 00_empire_names.txt
 		
@@ -197,7 +201,15 @@ country_event = {
 						}
 					}
 				}
-				create_hive_mind_species_mod = yes
+				root.capital_scope = { #workaround to prevent main species from accidentally flipping
+					create_pop = {
+						species = prev
+					}
+					last_created_pop = {
+						create_hive_mind_species_mod = yes
+						kill_pop = yes
+					}
+				}
 			}
 		}
 		
@@ -225,7 +237,15 @@ country_event = {
 						}
 					}
 				}
-				create_hive_mind_species_mod = yes
+				root.capital_scope = { #workaround to prevent main species from accidentally flipping
+					create_pop = {
+						species = prev
+					}
+					last_created_pop = {
+						create_hive_mind_species_mod = yes
+						kill_pop = yes
+					}
+				}
 			}
 		}
 		
@@ -255,7 +275,15 @@ country_event = {
 						}
 					}
 				}
-				create_hive_mind_species_mod = yes
+				root.capital_scope = { #workaround to prevent main species from accidentally flipping
+					create_pop = {
+						species = prev.species
+					}
+					last_created_pop = {
+						create_hive_mind_species_mod = yes
+						kill_pop = yes
+					}
+				}
 			}
 		}
 
@@ -271,9 +299,30 @@ country_event = {
 						}
 				}
 			}
-			create_hive_mind_species_mod = yes
+			root.capital_scope = { #workaround to prevent main species from accidentally flipping
+				create_pop = {
+					species = prev
+				}
+				last_created_pop = {
+					create_hive_mind_species_mod = yes
+					kill_pop = yes
+				}
+			}
 		}
 		
+		every_owned_leader = {
+			limit = {
+				species = { has_trait = trait_hive_mind  }
+				NOR = {
+					has_trait = leader_trait_ruler_hive_mind
+				}
+			}
+			if = {
+				limit = { leader_class = ruler }
+				add_trait = leader_trait_ruler_hive_mind
+				add_ruler_trait = leader_trait_ruler_hive_mind
+			}
+		}
 		
 		every_owned_leader = {
 			limit = {
@@ -311,8 +360,6 @@ country_event = {
 			}
 			country_event = { id = hive_mind_asc.3 days = 5 }
 		}
-
-		
 	}
 }
 
