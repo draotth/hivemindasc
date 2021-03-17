@@ -15,6 +15,7 @@ country_event = {
 		NOT = { has_ethic = ethic_gestalt_consciousness }
 		NOT = { has_special_project = HIVE_MIND_ASCENSION_PROJECT }
 		has_technology = "tech_genetic_resequencing"
+		host_has_dlc = Utopia
 	}
 	
 	option = {
@@ -29,7 +30,7 @@ country_event = {
 	}
 }
 
-# Hive Mind Enabled
+# Hive Mind Prompt
 country_event = {
 	id = hive_mind_asc.2
 	title = "hive_mind_asc.2.name"
@@ -38,7 +39,8 @@ country_event = {
 	show_sound = event_evolution_mastery
 	
 	is_triggered_only = yes
-	
+	fire_only_once = yes
+
 	option = {
 		
 		ai_chance = {
@@ -48,11 +50,16 @@ country_event = {
 		custom_tooltip = "hive_mind_asc.2.a.tooltip"
 
 		hidden_effect = {
+
+			prepare_for_hive_mind_asc = yes
 			
 			change_government = {
 				authority = auth_hive_mind
 				civics = random
+				cooldown = no
 			}
+
+			finalize_hive_mind_asc = yes
 		}
 	}
 
@@ -66,8 +73,11 @@ country_event = {
 
 		hidden_effect = {
 
+			prepare_for_hive_mind_asc = yes
+			
 			if = {
 				limit = { has_technology = tech_galactic_administration }
+				
 
 				change_government = {
 					authority = auth_hive_mind
@@ -77,288 +87,23 @@ country_event = {
 						civic = random
 						civic = random
 					}
-				}
-			}
-
-			if = {
-				limit = {
-					not = {
-						has_technology = tech_galactic_administration
-					}
-				}
-				
-				change_government = {
-					authority = auth_hive_mind
-
-					civics = {
-						civic = civic_hive_devouring_swarm
-						civic = random
-					}
-				}
-			}
-		}
-	}
-
-	immediate = {
-		set_country_flag = hive_mind	
-		shift_ethic = ethic_gestalt_consciousness
-		
-		#values for hive mind
-		#set_country_flag = hive_mind
-		
-		#values for devouring swarm
-		# set_country_flag =  devouring_swarm
-		
-		#for both
-		#advisor_voice_type="l_hivemind"
-		
-		#TODO: Here's the mapping for non-hive to hive civics. Possibly out of date post 2.2
-		# Civics from -> to
-		# 1 Meritocracy -> Pooled knowledge (+1 leader pool, +1 leader level)
-		# 2 Cutthroat Politics -> Subsumed Will (+1 influence)
-		# 3 Efficient Bureaucracy -> Divided Attention (+2 core sectors)
-		# 4 Citizen service -> Subspace Ephapse (+15% naval capacity)
-		# 5 Technocracy -> Natural Neural Network (+1 research alt)
-		# 6 Environmentalist -> Ascetic (-20% consumer goods cost)
-		# 7 Beacon of liberty -> One Mind (+15% unity)
-		# 8 Warrior culture -> Strength of legions (+20% army damage -20% army upkeep)
-		
-		
-		random_owned_pop = {
-			limit = { is_exact_same_species = root }
-			create_hive_mind_species_mod = yes
-			species = { save_event_target_as = new_main_species }
-		}
-		change_dominant_species = { species = event_target:new_main_species }
-		
-		species = {
-			rename_species = {
-				prompt_country = prev #If targeted country is a player they will get a popup asking for a name/plural/adjective combo. Otherwise the species will get a random name from the specified name_list
-				name_list = ascension_list
-			}
-		}
-		#set_name = "[This.GetSpeciesName] Collective"  #Todo: Localize. or better use empire name format and random list better
-		
-		#note to self: see 00_empire_names.txt
-		
-		while = {
-			limit = {
-				any_owned_pop = {
-					is_sapient = yes
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-			}
-			random_owned_pop = {
-				limit = {
-					is_sapient = yes
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-				create_hive_mind_species_mod = yes
-				
-				set_citizenship_type = {
-					country = owner
-					type = citizenship_full
 					cooldown = no
 				}
 			}
-		}
-		
-		while = {
-			limit = {
-				any_owned_leader = {
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-			}
-			random_owned_leader = {
-				limit = {
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-				root.capital_scope = { #workaround to prevent main species from accidentally flipping
-					create_pop = {
-						species = prev
-					}
-					last_created_pop = {
-						create_hive_mind_species_mod = yes
-						kill_pop = yes
-					}
-				}
-			}
-		}
-		
-		while = {
-			limit = {
-				any_pool_leader = {
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-			}
-			random_pool_leader = {
-				limit = {
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-				root.capital_scope = { #workaround to prevent main species from accidentally flipping
-					create_pop = {
-						species = prev
-					}
-					last_created_pop = {
-						create_hive_mind_species_mod = yes
-						kill_pop = yes
-					}
-				}
-			}
-		}
-		
-		while = {
-			limit = {
-				any_owned_army = {
-					exists = species
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-			}
-			random_owned_army = {
-				limit = {
-					exists = species
-					species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-					}
-				}
-				root.capital_scope = { #workaround to prevent main species from accidentally flipping
-					create_pop = {
-						species = prev.species
-					}
-					last_created_pop = {
-						create_hive_mind_species_mod = yes
-						kill_pop = yes
-					}
-				}
-			}
-		}
 
-		every_owned_ship = {
-			limit = {
-				is_ship_class = shipclass_colonizer
-				species = {
-						NOR = {
-							has_trait = trait_hive_mind 
-		  					has_trait = trait_mechanical
-							has_trait = trait_machine_unit
-							has_trait = leader_trait_curator
-						}
-				}
-			}
-			root.capital_scope = { #workaround to prevent main species from accidentally flipping
-				create_pop = {
-					species = prev
-				}
-				last_created_pop = {
-					create_hive_mind_species_mod = yes
-					kill_pop = yes
-				}
-			}
-		}
-		
-		every_owned_leader = {
-			limit = {
-				species = { has_trait = trait_hive_mind  }
-				NOR = {
-					has_trait = leader_trait_ruler_hive_mind
-				}
-			}
-			if = {
-				limit = { leader_class = ruler }
-				add_trait = leader_trait_ruler_hive_mind
-				add_ruler_trait = leader_trait_ruler_hive_mind
-			}
-		}
-		
-		every_owned_leader = {
-			limit = {
-				species = { has_trait = trait_hive_mind }
-				NOT = {
-					has_trait = leader_trait_ruler_hive_mind
-				}
-			}
-			if = {
-				limit = { leader_class = ruler }
-				add_trait = leader_trait_ruler_hive_mind
-			}
-		}
-		
-		every_pool_leader = {
-			limit = {
-				species = { has_trait = trait_hive_mind }
-				NOT = {
-					has_trait = leader_trait_ruler_hive_mind
-				}
-			}
-			if = {
-				limit = { leader_class = ruler }
-				add_trait = leader_trait_ruler_hive_mind
-			}
-		}
+			else = {
+				change_government = {
+					authority = auth_hive_mind
 
-		observer_event = { id = hive_mind_asc.4 }
-		
-		every_country = {
-			limit = {
-				is_ai = no
-				NOT = { is_same_value = root }
-				has_communications = root
+					civics = {
+						civic = civic_hive_devouring_swarm
+						civic = random
+					}
+					cooldown = no
+				}
 			}
-			country_event = { id = hive_mind_asc.3 days = 5 }
+
+			finalize_hive_mind_asc = yes
 		}
 	}
 }
