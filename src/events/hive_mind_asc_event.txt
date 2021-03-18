@@ -78,7 +78,6 @@ country_event = {
 			if = {
 				limit = { has_technology = tech_galactic_administration }
 				
-
 				change_government = {
 					authority = auth_hive_mind
 

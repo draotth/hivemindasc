@@ -26,13 +26,15 @@ create_hive_mind_species_mod = {
 			pops_have_happiness = no
 		}
 		save_event_target_as = changing_species
+
+		last_created_species = {
+			set_species_flag = original_assimilated_species@root.owner
+		}
 	}
 
 	owner = {
 		every_owned_pop = {
 			limit = { is_exact_same_species = event_target:changing_species }
-			clear_pop_category = yes
-			clear_ethos = yes
 			change_species = last_created_species
 		}
 		every_owned_leader = {
@@ -113,10 +115,7 @@ prepare_for_hive_mind_asc = {
 	
 	set_country_flag = hive_mind
 	shift_ethic = ethic_gestalt_consciousness
-}
-
-finalize_hive_mind_asc = {
-
+	
 	give_technology = { tech = tech_hive_node message = no}
 
 	#Make the main species and set it
@@ -139,7 +138,9 @@ finalize_hive_mind_asc = {
 			species = { save_event_target_as = new_main_species }
 		}
 	}
+}
 
+finalize_hive_mind_asc = {
 	while = {
 		limit = {
 			any_owned_pop = {
@@ -302,14 +303,13 @@ finalize_hive_mind_asc = {
 			}
 		}
 	}
-	change_dominant_species = { species = event_target:new_main_species}
+	change_dominant_species = { species = event_target:new_main_species change_all = yes }
 
 	#Set living standards
 	every_owned_species = {
 		limit = {
 			species = { has_trait = trait_hive_mind }
 		}
-		set_species_flag = ""
 
 		set_citizenship_type = {
 			country = root
@@ -328,9 +328,11 @@ finalize_hive_mind_asc = {
 			NOT = { root = { has_civic = civic_hive_devouring_swarm } }
 		}
 		every_owned_species = {
+
 			limit = {
 				NOT = { species = { has_trait = trait_hive_mind } }
 			}
+
 			set_citizenship_type = {
 				country = root
 				type = citizenship_assimilation
