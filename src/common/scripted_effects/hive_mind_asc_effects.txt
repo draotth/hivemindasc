@@ -15,7 +15,7 @@ create_hive_mind_species_mod = {
 				trait = trait_hive_mind
 			}
 			homeworld = this
-			name_list = "HIVE"
+			namelist = "HIVE"
 
 			pops_can_be_colonizers = yes
 			pops_can_migrate = no
