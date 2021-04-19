@@ -3,7 +3,6 @@ tags={
 	"Events"
 	"Gameplay"
 }
-picture="title.jpg"
-supported_version="2.8.*"
-path="C:/Users/Dan/Documents/Paradox Interactive/Stellaris/mod/hivemindasc"
+picture="thumbnail.png"
+supported_version="3.0.*"
 remote_file_id="1352586342"

@@ -4,6 +4,6 @@ tags={
 	"Gameplay"
 }
 picture="thumbnail.png"
-supported_version="2.8.*"
+supported_version="3.0.*"
 path="C:/Users/Dan/Documents/Paradox Interactive/Stellaris/mod/hivemindasc"
 remote_file_id="1352586342"
