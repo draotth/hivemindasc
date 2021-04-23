@@ -118,6 +118,7 @@ finalize_hive_mind_asc = {
 		random_owned_pop = {
 			limit = { is_exact_same_species = root }
 			create_hive_mind_species_mod = yes
+			change_dominant_species = { species = last_created_species }
 			species = { save_event_target_as = new_main_species }
 		}
 	}
@@ -125,8 +126,14 @@ finalize_hive_mind_asc = {
 		random_owned_pop = {
 			limit = { is_same_species = root }
 			create_hive_mind_species_mod = yes
+			change_dominant_species = { species = last_created_species }
 			species = { save_event_target_as = new_main_species }
 		}
+	}
+
+	rename_species = {
+		prompt_country = root #If targeted country is a player they will get a popup asking for a name/plural/adjective combo. Otherwise the species will get a random name from the specified name_list
+		name_list = ascension_list
 	}
 
 	while = {
