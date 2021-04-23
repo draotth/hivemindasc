@@ -8,22 +8,10 @@ create_hive_mind_species_mod = {
 			name = this
 			plural = this
 			class = this
-			adjective = this
-			portrait = this
 			traits = this
 			traits = {
 				trait = trait_hive_mind
 			}
-			homeworld = this
-			namelist = "HIVE"
-
-			pops_can_be_colonizers = yes
-			pops_can_migrate = no
-			pops_can_reproduce = yes
-			pops_can_join_factions = no
-			can_generate_leaders = yes
-			pops_can_be_slaves = no
-			pops_have_happiness = no
 		}
 		save_event_target_as = changing_species
 
@@ -112,11 +100,13 @@ prepare_for_hive_mind_asc = {
 		option = ai_outlawed
 		cooldown = no
 	}
-	
+
 	set_country_flag = hive_mind
 	shift_ethic = ethic_gestalt_consciousness
-	
-	give_technology = { tech = tech_hive_node message = no}
+}
+
+finalize_hive_mind_asc = {
+	give_technology = { tech = tech_hive_node message = no }
 
 	#Make the main species and set it
 	if = {
@@ -138,9 +128,7 @@ prepare_for_hive_mind_asc = {
 			species = { save_event_target_as = new_main_species }
 		}
 	}
-}
 
-finalize_hive_mind_asc = {
 	while = {
 		limit = {
 			any_owned_pop = {
@@ -303,56 +291,13 @@ finalize_hive_mind_asc = {
 			}
 		}
 	}
-	change_dominant_species = { species = event_target:new_main_species change_all = yes }
-
-	#Set living standards
-	every_owned_species = {
-		limit = {
-			species = { has_trait = trait_hive_mind }
-		}
-
-		set_citizenship_type = {
-			country = root
-			type = citizenship_full
-			cooldown = no 
-		}
-
-		set_living_standard = {
-			country = root
-			type = living_standard_hive_mind
-			cooldown = no
-		}
-	}
-	if = {
-		limit = {
-			NOT = { root = { has_civic = civic_hive_devouring_swarm } }
-		}
-		every_owned_species = {
-
-			limit = {
-				NOT = { species = { has_trait = trait_hive_mind } }
-			}
-
-			set_citizenship_type = {
-				country = root
-				type = citizenship_assimilation
-				cooldown = no
-			}
-
-			set_living_standard = {
-				country = root
-				type = living_standard_ego_assimilation
-				cooldown = no
-			}
-		}
-	}
 
 	every_owned_planet = {
 		validate_planet_buildings_and_districts = yes
 		check_planet_employment = yes
 	}
 	set_government_cooldown = no
-	
+
 	every_owned_leader = {
 		limit = {
 			species = { has_trait = trait_hive_mind  }
