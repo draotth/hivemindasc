@@ -13,19 +13,32 @@ country_event = {
 	
 	trigger = {
 		NOT = { has_ethic = ethic_gestalt_consciousness }
-		NOT = { has_special_project = HIVE_MIND_ASCENSION_PROJECT }
+		NOT = { has_special_project = "HIVE_MIND_ASCENSION_PROJECT" }
 		has_technology = "tech_genetic_resequencing"
 		host_has_dlc = Utopia
 	}
 	
 	option = {
 		name = "hive_mind_asc.1.a"
+		hidden_effect = {
+			 save_event_target_as = hive_mind_asc_owner
+		}
 		capital_scope = {
 			enable_special_project = {
-				name = HIVE_MIND_ASCENSION_PROJECT
+				name = "HIVE_MIND_ASCENSION_PROJECT"
 				location = this
 				owner = root
 			}
+		}
+		ai_chance = {
+			factor = 2
+		}
+	}
+
+	option = {
+		name = "hive_mind_asc.1.b"
+		ai_chance = {
+			factor = 1
 		}
 	}
 }
@@ -41,8 +54,11 @@ country_event = {
 	is_triggered_only = yes
 	fire_only_once = yes
 
+	immediate = {
+		prepare_for_hive_mind_asc = yes
+	}
+
 	option = {
-		
 		ai_chance = {
 			factor = 95
 		}
@@ -50,16 +66,13 @@ country_event = {
 		custom_tooltip = "hive_mind_asc.2.a.tooltip"
 
 		hidden_effect = {
-
-			prepare_for_hive_mind_asc = yes
-			
 			change_government = {
 				authority = auth_hive_mind
 				civics = random
 				cooldown = no
+				remove_invalid_civics = yes
 			}
-
-			finalize_hive_mind_asc = yes
+			country_event = { id = hive_mind_asc.5 }
 		}
 	}
 
@@ -73,21 +86,9 @@ country_event = {
 
 		hidden_effect = {
 
-			prepare_for_hive_mind_asc = yes
-			
 			if = {
 				limit = { has_technology = tech_galactic_administration }
-				
-				change_government = {
-					authority = auth_hive_mind
-
-					civics = {
-						civic = civic_hive_devouring_swarm
-						civic = random
-						civic = random
-					}
-					cooldown = no
-				}
+				country_event = { id = hive_mind_asc.5 }
 			}
 
 			else = {
@@ -99,10 +100,11 @@ country_event = {
 						civic = random
 					}
 					cooldown = no
+					remove_invalid_civics = yes
 				}
+				country_event = { id = hive_mind_asc.5 }
 			}
 
-			finalize_hive_mind_asc = yes
 		}
 	}
 }
@@ -166,5 +168,15 @@ observer_event = {
 
 	option = {
 		name = OK
+	}
+}
+
+country_event = {
+	id = hive_mind_asc.5
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		finalize_hive_mind_asc = yes
 	}
 }

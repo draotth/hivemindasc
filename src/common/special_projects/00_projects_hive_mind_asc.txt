@@ -22,6 +22,7 @@ special_project = {
 	}
 	
 	on_success = {
+		#event_target:flesh_weak_owner = { #todo: enable this
 		owner = {
 			country_event = { id = hive_mind_asc.2 }
 		}
