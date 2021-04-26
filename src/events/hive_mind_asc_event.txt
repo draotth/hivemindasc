@@ -66,12 +66,6 @@ country_event = {
 		custom_tooltip = "hive_mind_asc.2.a.tooltip"
 
 		hidden_effect = {
-			change_government = {
-				authority = auth_hive_mind
-				civics = random
-				cooldown = no
-				remove_invalid_civics = yes
-			}
 			country_event = { id = hive_mind_asc.5 }
 		}
 	}
@@ -88,6 +82,16 @@ country_event = {
 
 			if = {
 				limit = { has_technology = tech_galactic_administration }
+				change_government = {
+					authority = auth_hive_mind
+
+					civics = {
+						civic = civic_hive_devouring_swarm
+						civic = random
+						civic = random
+					}
+					cooldown = no
+				}
 				country_event = { id = hive_mind_asc.5 }
 			}
 
@@ -100,7 +104,6 @@ country_event = {
 						civic = random
 					}
 					cooldown = no
-					remove_invalid_civics = yes
 				}
 				country_event = { id = hive_mind_asc.5 }
 			}
@@ -112,7 +115,7 @@ country_event = {
 # Notification for Other Nations
 country_event = {
 	id = hive_mind_asc.3
-	
+
 	title = "hive_mind_asc.3.name"
 	desc = {
 		text = hive_mind_asc.3.1.desc

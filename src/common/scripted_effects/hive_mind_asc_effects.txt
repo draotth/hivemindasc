@@ -3,24 +3,32 @@
 # Scope: Something that has a species and an owner
 create_hive_mind_species_mod = {
 	species = {
+		save_event_target_as = changing_species
+
 		create_species = {
 			is_mod = yes
 			name = this
 			plural = this
+			adjective = this
 			class = this
+			portrait = this
 			traits = this
+			homeworld = this
 			traits = {
+				ideal_planet_class = this
 				trait = trait_hive_mind
 			}
 		}
-		save_event_target_as = changing_species
 	}
-
+	
 	owner = {
 		every_owned_pop = {
 			limit = { is_exact_same_species = event_target:changing_species }
 			change_species = last_created_species
+			wipe_pop_ethos = yes
+			pop_change_ethic = ethic_gestalt_consciousness
 		}
+
 		every_owned_leader = {
 			limit = { is_exact_same_species = event_target:changing_species }
 			change_species = last_created_species
@@ -44,13 +52,37 @@ create_hive_mind_species_mod = {
 			change_species = last_created_species
 		}
 	}
+
+	event_target:changing_species = {
+		if = {
+			limit = {
+				not = { is_exact_same_species = root }
+			}
+
+			set_species_to_assimilate = yes
+
+			last_created_species = {
+				set_citizenship_type = {
+					country = root
+					type = citizenship_full
+					cooldown = no
+				}
+
+				set_living_standard = {
+					country = root
+					type = living_standard_hive_mind
+					cooldown = no
+				}
+			}
+		}
+	}
 }
 
 #scope: country
 prepare_for_hive_mind_asc = {
 
 	set_country_flag = hive_mind
-	
+
 	if = {
 		limit = {
 			OR = {
@@ -101,6 +133,15 @@ prepare_for_hive_mind_asc = {
 		cooldown = no
 	}
 
+	#Setup the government
+	shift_ethic = ethic_gestalt_consciousness
+
+	change_government = {
+		authority = auth_hive_mind
+		civics = random
+		cooldown = no
+	}
+
 	#Make the main species and set it
 	if = {
 		limit = {
@@ -111,28 +152,21 @@ prepare_for_hive_mind_asc = {
 		random_owned_pop = {
 			limit = { is_exact_same_species = root }
 			create_hive_mind_species_mod = yes
-			species = {
-				save_event_target_as = main_hive_mind_species
-			}
 		}
 	}
 	else = {
-		random_owned_pop = {
-			limit = { is_same_species = root }
-			create_hive_mind_species_mod = yes
-			species = {
-				save_event_target_as = main_hive_mind_species
+		root.capital_scope = {
+			create_pop = {
+				species = root
+			}
+			last_created_pop = {
+				create_hive_mind_species_mod = yes
+				kill_pop = yes
 			}
 		}
 	}
-	
-	shift_ethic = ethic_gestalt_consciousness
-	change_government = {
-		authority = auth_hive_mind
-		cooldown = no
-		remove_invalid_civics = yes
-	}
 
+	#All other species remaining
 	while = {
 		limit = {
 			any_owned_pop = {
@@ -351,45 +385,20 @@ prepare_for_hive_mind_asc = {
 #scope: country
 finalize_hive_mind_asc = {
 
-	#Set living standards
-	every_owned_species = {
-		limit = {
-			species = { has_trait = trait_hive_mind }
-		}
-
-		set_citizenship_type = {
-			country = root
-			type = citizenship_full
-			cooldown = no 
-		}
-
-		set_living_standard = {
-			country = root
-			type = living_standard_hive_mind
-			cooldown = no
-		}
-	}
 	if = {
 		limit = {
-			NOT = { root = { has_civic = civic_hive_devouring_swarm } }
+			root = {has_civic = civic_hive_devouring_swarm }
 		}
-		every_owned_species = {
 
+		every_owned_pop_species = {
 			limit = {
-				NOT = { species = { has_trait = trait_hive_mind } }
+				nor = {
+					has_trait = trait_hive_mind
+					is_exact_same_species = root
+				}
 			}
 
-			set_citizenship_type = {
-				country = root
-				type = citizenship_assimilation
-				cooldown = no
-			}
-
-			set_living_standard = {
-				country = root
-				type = living_standard_ego_assimilation
-				cooldown = no
-			}
+			set_species_to_assimilate = yes
 		}
 	}
 
@@ -400,4 +409,44 @@ finalize_hive_mind_asc = {
 		check_planet_employment = yes
 	}
 	set_government_cooldown = no
+}
+
+#scope: species
+set_species_to_assimilate = {
+	#Set living standards
+	if = {
+		limit = {
+			root = { has_civic = civic_hive_devouring_swarm }
+		}
+		set_citizenship_type = {
+			country = root
+			type = citizenship_purge
+			cooldown = no
+		}
+
+		set_living_standard = {
+			country = root
+			type = living_standard_none
+			cooldown = no
+		}
+
+		set_purge_type = {
+			country = root
+			type = purge_processing
+			cooldown = no
+		}
+	}
+	else = {
+		set_citizenship_type = {
+			country = root
+			type = citizenship_assimilation
+			cooldown = no
+		}
+
+		set_living_standard = {
+			country = root
+			type = living_standard_ego_assimilation
+			cooldown = no
+		}
+	}
 }
