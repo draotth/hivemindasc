@@ -155,14 +155,9 @@ prepare_for_hive_mind_asc = {
 		}
 	}
 	else = {
-		root.capital_scope = {
-			create_pop = {
-				species = root
-			}
-			last_created_pop = {
-				create_hive_mind_species_mod = yes
-				kill_pop = yes
-			}
+		random_owned_pop = {
+			limit = { is_same_species = root }
+			create_hive_mind_species_mod = yes
 		}
 	}
 
